@@ -1,0 +1,20 @@
+{{- if .codespaces -}}
+#!/bin/bash
+
+# log errors
+exec > >(tee -i $HOME/dotfiles_install.log)
+exec 2>&1
+set -x
+
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' # just in case: https://github.com/wbthomason/packer.nvim/issues/502#issuecomment-1135331998
+nvim --headless -c 'Copilot setup' +qa
+nvim --headless -c 'GoInstallBinaries' +qa
+
+sudo chsh -s "$(which zsh)" "$(whoami)"
+
+# install zsh vi mode
+git clone https://github.com/jeffreytse/zsh-vi-mode \
+  $HOME/.oh-my-zsh/custom/plugins/zsh-vi-mode
+
+{{end -}}
