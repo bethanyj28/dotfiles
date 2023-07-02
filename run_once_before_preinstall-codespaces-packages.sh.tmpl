@@ -29,11 +29,4 @@ chmod u+x nvim.appimage
 ./squashfs-root/AppRun --version
 sudo mv squashfs-root /
 sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
-
-# install copilot
-echo "Installing copilot..."
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-nvm use stable
-git clone https://github.com/github/copilot.vim.git \
-  ./config/nvim/pack/github/start/copilot.vim
 {{end -}}
