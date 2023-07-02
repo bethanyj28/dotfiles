@@ -42,7 +42,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$PATH:/path/to/elixir/bin"
 export EDITOR="nvim"
 
-{{- if .codespaces -}}
+{{ if .codespaces }}
 
 # kubectl
 alias ark='kubectl -n actions-results'
@@ -58,4 +58,4 @@ export GONOSUMDB='github.com/github/*'
 
 # make it not ugly
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-{{end -}}
+{{ end }}
