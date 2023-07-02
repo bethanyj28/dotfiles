@@ -25,7 +25,10 @@ fi
 echo "Installing neovim..."
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod u+x nvim.appimage
-sudo mv nvim.appimage /usr/local/bin/nvim
+./nvim.appimage --appimage-extract
+./squashfs-root/AppRun --version
+sudo mv squashfs-root /
+sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
 
 # install copilot
 nvm use stable
