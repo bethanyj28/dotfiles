@@ -30,11 +30,7 @@ chmod u+x nvim.appimage
 sudo mv squashfs-root /
 sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
 
-# install copilot
-nvm use stable
-git clone https://github.com/github/copilot.vim.git \
-  ./config/nvim/pack/github/start/copilot.vim
-
 # install oh my zsh
+echo "Installing oh my zsh..."
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 {{end -}}
