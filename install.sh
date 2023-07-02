@@ -5,8 +5,6 @@ set -ex # -e: exit on error -x: log to console
 if [ -z "${CODESPACES}" ]; then
   echo "not codespaces"
 else
-  sudo apt install -y ripgrep
-
   if [ ! "$(command -v chezmoi)" ]; then
     echo "Installing: chezmoi ********************"
 
