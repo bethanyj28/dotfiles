@@ -3,12 +3,6 @@
 
 set -ex
 
-# install copilot
-echo "Installing copilot..."
-nvm use stable
-git clone https://github.com/github/copilot.vim.git \
-  ./config/nvim/pack/github/start/copilot.vim
-
 echo "Running nvim setup..."
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' # just in case: https://github.com/wbthomason/packer.nvim/issues/502#issuecomment-1135331998
