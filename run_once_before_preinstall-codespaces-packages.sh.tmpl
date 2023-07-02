@@ -1,10 +1,7 @@
 {{- if .codespaces -}}
 #!/bin/bash
 
-# log errors
-exec > >(tee -i $HOME/dotfiles_install.log)
-exec 2>&1
-set -x
+set -ex
 
 # install packages
 PACKAGES_NEEDED="\
