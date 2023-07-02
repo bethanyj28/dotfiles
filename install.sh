@@ -3,10 +3,10 @@
 set -ex # -e: exit on error -x: log to console
 
 if [ -z "${CODESPACES}" ]; then
-  echo "not codespaces"
+  echo "Not codespaces - skipping"
 else
   if [ ! "$(command -v chezmoi)" ]; then
-    echo "Installing: chezmoi ********************"
+    echo "Installing chezmoi..."
 
     bin_dir="$HOME/.local/bin"
     chezmoi="$bin_dir/chezmoi"
