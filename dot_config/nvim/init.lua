@@ -47,11 +47,11 @@ require('packer').startup(function(use) -- Package manager
   use 'lewis6991/gitsigns.nvim'
 
   -- Look good
-  use 'gruvbox-community/gruvbox' -- Theme
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Go
   use 'ray-x/go.nvim'
@@ -133,7 +133,7 @@ vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
-vim.cmd [[colorscheme gruvbox]]
+vim.cmd.colorscheme "catppuccin"
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -180,12 +180,22 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- Catppuccin settings
+require("catppuccin").setup {
+  flavor = "mocha",
+  integrations = {
+    cmp = true,
+    nvimtree = true,
+    telescope = true,
+  }
+}
+
 -- Set lualine as statusline
 -- See `:help lualine.txt`
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'gruvbox',
+    theme = 'catppuccin',
     component_separators = '|',
     section_separators = '',
   },
