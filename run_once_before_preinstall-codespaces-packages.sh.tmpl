@@ -8,11 +8,7 @@ echo "Installing packages..."
 PACKAGES_NEEDED="\
     silversearcher-ag \
     bat \
-    fuse \
-    dialog \
-    apt-utils \
-    ripgrep \
-    libfuse2"
+    ripgrep"
 
 if ! dpkg -s ${PACKAGES_NEEDED} > /dev/null 2>&1; then
     if [ ! -d "/var/lib/apt/lists" ] || [ "$(ls /var/lib/apt/lists/ | wc -l)" = "0" ]; then
