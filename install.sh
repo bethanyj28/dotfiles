@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e # -e: exit on error
+set -ex # -e: exit on error -x: log to console
 
 if [ -z "${CODESPACES}" ]; then
   echo "not codespaces"
