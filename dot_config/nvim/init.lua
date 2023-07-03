@@ -185,6 +185,7 @@ require("catppuccin").setup {
   flavor = "mocha",
   integrations = {
     cmp = true,
+    gitsigns = true,
     nvimtree = true,
     telescope = true,
   }
