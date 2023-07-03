@@ -8,6 +8,7 @@ echo "Installing packages..."
 PACKAGES_NEEDED="\
     silversearcher-ag \
     bat \
+    tmux \
     ripgrep"
 
 if ! dpkg -s ${PACKAGES_NEEDED} > /dev/null 2>&1; then
