@@ -5,9 +5,9 @@ A new evolution of my dotfiles utilizing chezmoi for management. For now primari
 ## //TODO
 - [x] Setup current dotfiles to work with chezmoi
 - [x] Fix errors in neovim for local & codespaces
-- [ ] Get setup with tmux
+- [x] Get setup with tmux
   - [x] Seamless navigation between tmux and neovim
-  - [ ] Get comfortable with tmux & tweak keybindings
+  - [x] Get comfortable with tmux & tweak keybindings
 - [ ] Look into Alacritty when comfortable with tmux (easily port config)
 - [ ] Update theme
   - [x] Catppuccin everywhere? ☕🐈‍⬛
