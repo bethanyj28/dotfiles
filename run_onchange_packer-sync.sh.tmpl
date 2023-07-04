@@ -2,4 +2,6 @@
 
 # init.lua hash: {{ include "dot_config/nvim/init.lua" | sha256sum }}
 
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+# nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+
+nvim --headless "+Lazy! sync" +qa
