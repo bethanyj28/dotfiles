@@ -36,6 +36,8 @@ require('packer').startup(function(use) -- Package manager
     end,
   }
 
+  use 'nvim-tree/nvim-web-devicons'
+
   use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
@@ -341,39 +343,61 @@ require("nvim-tree").setup({
   view = {
     adaptive_size = true,
   },
+  hijack_cursor = true,
+  hijack_unnamed_buffer_when_opening = false,
+  sync_root_with_cwd = true,
+  update_focused_file = {
+    enable = true,
+    update_root = false,
+  },
+  git = {
+    enable = false,
+    ignore = true,
+  },
+  filesystem_watchers = {
+    enable = true,
+  },
   renderer = {
-    group_empty = true,
+    root_folder_label = false,
+    highlight_git = false,
+    highlight_opened_files = "none",
+    indent_markers = {
+      enable = false,
+    },
     icons = {
       show = {
-        file = false,
-        folder = false,
+        file = true,
+        folder = true,
+        folder_arrow = true,
+        git = false,
       },
       glyphs = {
-        symlink = "➚",
-        git = {
-          unstaged = "○",
-          staged = "●",
-          unmerged = "⊜",
-          renamed = "⊙",
-          untracked = "⊕",
-          deleted = "⊗",
-          ignored = "⊘"
-        },
+        default = "󰈚",
+        symlink = "",
         folder = {
-          arrow_open = "▾",
-          arrow_closed = "▸",
-          default = "▸",
-          open =  "▾",
-          empty = "▸",
-          empty_open = "▾",
-          symlink = "▸",
-          symlink_open = "▾",
+          default = "",
+          empty = "",
+          empty_open = "",
+          open = "",
+          symlink = "",
+          symlink_open = "",
+          arrow_open = "",
+          arrow_closed = "",
+        },
+        git = {
+          unstaged = "✗",
+          staged = "✓",
+          unmerged = "",
+          renamed = "➜",
+          untracked = "★",
+          deleted = "",
+          ignored = "◌",
         },
       },
     },
   },
   filters = {
-    dotfiles = true,
+    dotfiles = false,
   },
 })
 
