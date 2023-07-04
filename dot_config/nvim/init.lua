@@ -108,6 +108,15 @@
 --   pattern = vim.fn.expand '$MYVIMRC',
 -- })
 --
+-- [[ Basic Keymaps ]]
+-- Set , as the leader key
+-- See `:help mapleader`
+--  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -149,12 +158,7 @@ vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.shiftwidth = 2
 
--- [[ Basic Keymaps ]]
--- Set , as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ','
-vim.g.maplocalleader = ','
+
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
