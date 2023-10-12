@@ -148,17 +148,12 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
--- Set colorscheme
-vim.cmd.colorscheme "catppuccin"
-
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.shiftwidth = 2
-
-
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
