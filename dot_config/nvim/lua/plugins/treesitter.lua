@@ -26,7 +26,9 @@ return {
 					'comment',
 					'json',
 					'yaml',
-					'make'
+					'make',
+					'elixir',
+					'bash',
 				},
 
 				highlight = { enable = true },
