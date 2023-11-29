@@ -61,6 +61,7 @@ local servers = {
       hostInfo = 'neovim',
     },
   },
+	elixirls = {},
 }
 
 -- LSP settings.
