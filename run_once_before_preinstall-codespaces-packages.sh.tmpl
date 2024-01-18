@@ -20,7 +20,7 @@ fi
 
 # install latest neovim
 if [ -f "/usr/bin/nvim" ]; then
-    rm -rf /usr/bin/nvim
+    sudo rm -rf /usr/bin/nvim
 fi
 echo "Installing neovim..."
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
