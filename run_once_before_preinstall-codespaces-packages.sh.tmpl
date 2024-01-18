@@ -19,11 +19,15 @@ if ! dpkg -s ${PACKAGES_NEEDED} > /dev/null 2>&1; then
 fi
 
 # install latest neovim
-echo "Installing neovim..."
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-chmod u+x nvim.appimage
-./nvim.appimage --appimage-extract
-./squashfs-root/AppRun --version
-sudo mv squashfs-root /
-sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
+if [ -f "/usr/bin/nvim" ]; then
+    echo "nvim already installed"
+else
+    echo "Installing neovim..."
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    chmod u+x nvim.appimage
+    ./nvim.appimage --appimage-extract
+    ./squashfs-root/AppRun --version
+    sudo mv squashfs-root /
+    sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
+fi
 {{end -}}
