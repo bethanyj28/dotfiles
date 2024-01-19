@@ -24,6 +24,12 @@ alias dogs='docker logs -t -f'
 alias nuns="docker rmi -f $(docker images | grep '^<none>' | awk '{print $3}')"
 # better zsh-ing
 alias ll='ls -al'
+#gh
+alias ghgh='gh cs create -R github/github -s'
+alias sshpls='ssh-add .ssh/id_ed25519'
+function slop {
+    gh slack $1 | pbcopy
+}
 
 # use jk as esc
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
