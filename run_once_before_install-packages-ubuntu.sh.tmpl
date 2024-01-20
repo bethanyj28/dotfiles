@@ -1,0 +1,47 @@
+#!/bin/sh
+{{- if .ubuntu -}}
+
+# install packages
+echo "Installing packages..."
+PACKAGES_NEEDED="\
+    build-essential \
+    procps \
+    curl \
+    file \
+    git"
+
+if ! dpkg -s ${PACKAGES_NEEDED} > /dev/null 2>&1; then
+    if [ ! -d "/var/lib/apt/lists" ] || [ "$(ls /var/lib/apt/lists/ | wc -l)" = "0" ]; then
+        sudo apt-get update
+    fi
+    sudo apt-get -y -q install ${PACKAGES_NEEDED}
+fi
+
+# Install Homebrew
+command -v brew >/dev/null 2>&1 || \
+  (echo '🍺  Installing Homebrew' && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")
+
+brew bundle --no-lock --file=/dev/stdin <<EOF
+tap "homebrew/bundle"
+tap "homebrew/core"
+tap "homebrew/services"
+brew "bash"
+brew "bat"
+brew "bitwarden-cli"
+brew "docker"
+brew "fzf"
+brew "gh"
+brew "jq"
+brew "neovim"
+brew "python"
+brew "ripgrep"
+brew "ruby"
+brew "tmux"
+brew "wget"
+brew "nvm"
+brew "zplug"
+brew "zsh"
+EOF
+
+gh auth login
+{{end -}}

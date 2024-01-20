@@ -1,4 +1,6 @@
 {{- $codespaces:= env "CODESPACES" | not | not -}}
+{{- $ubuntu:= and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") (not $codespaces) }}
 
 data:
   codespaces: {{ $codespaces }}
+  ubuntu: {{ $ubuntu }}

@@ -1,5 +1,8 @@
 return {
-	{ "github/copilot.vim" },
+	{ 
+		"github/copilot.vim",
+		event = "InsertEnter"
+	},
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {

@@ -1,0 +1,43 @@
+#!/bin/sh
+{{if (eq .chezmoi.os "darwin") -}}
+set -e
+
+# Install Homebrew
+command -v brew >/dev/null 2>&1 || \
+  (echo '🍺  Installing Homebrew' && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")
+
+brew bundle --no-lock --file=/dev/stdin <<EOF
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-drivers"
+tap "homebrew/cask-fonts"
+tap "homebrew/cask-versions"
+tap "homebrew/core"
+tap "homebrew/services"
+brew "azure-cli"
+brew "bash"
+brew "bat"
+brew "bitwarden-cli"
+brew "fzf"
+brew "gh"
+brew "jq"
+brew "neovim"
+brew "python"
+brew "ripgrep"
+brew "ruby"
+brew "tmux"
+brew "wget"
+brew "nvm"
+brew "zplug"
+brew "zsh"
+cask "bitwarden"
+cask "docker"
+cask "font-jetbrains-mono-nerd-font"
+cask "raycast"
+cask "telegram"
+cask "zoom"
+cask "zsa-wally"
+EOF
+
+gh auth login
+{{end -}}
