@@ -62,6 +62,7 @@ local servers = {
     },
   },
 	elixirls = {},
+	sorbet = {},
 }
 
 -- LSP settings.
