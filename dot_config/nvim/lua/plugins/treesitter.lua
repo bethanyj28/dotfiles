@@ -29,7 +29,6 @@ return {
 					'make',
 					'elixir',
 					'bash',
-					'sorbet',
 				},
 
 				highlight = { enable = true },
