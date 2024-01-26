@@ -16,9 +16,9 @@ A new evolution of my dotfiles utilizing chezmoi for management. For now primari
 - [x] Fix filetree
   - [x] Show hidden files
   - [x] Show icons
-- [ ] Fix language support
-  - [ ] Go is different than everything else
-  - [ ] Solargraph either never works or crashes
-  - [ ] Add markdown support
+- [x] Fix language support
+  - [x] Go is different than everything else
+  - [x] Solargraph either never works or crashes
+  - [x] Add markdown support
   - [ ] Debugging with dap
 - [ ] Refactor neovim lua config
