@@ -3,8 +3,12 @@
 set -e
 
 # Install Homebrew
-command -v brew >/dev/null 2>&1 || \
-  (echo '🍺  Installing Homebrew' && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")
+if command -v brew >/dev/null 2>&1; then
+	echo '🍺  Homebrew is already installed - skipping.'
+	exit 0
+fi
+
+(echo '🍺  Installing Homebrew' && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
 tap "homebrew/bundle"

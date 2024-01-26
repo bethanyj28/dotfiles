@@ -63,6 +63,13 @@ local servers = {
   },
 	elixirls = {},
 	sorbet = {},
+	yamlls = {
+		schemas = {
+    	["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+			["http://json.schemastore.org/kustomization"] = "*/kustomize/*",
+		},
+	},
+	marksman = {},
 }
 
 -- LSP settings.
