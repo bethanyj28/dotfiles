@@ -29,6 +29,7 @@ return {
 					'make',
 					'elixir',
 					'bash',
+					'vimdoc',
 				},
 
 				highlight = { enable = true },
