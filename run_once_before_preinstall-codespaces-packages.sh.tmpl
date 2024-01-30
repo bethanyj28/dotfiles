@@ -22,6 +22,9 @@ fi
 # install latest neovim
 if [ -f "/usr/bin/nvim" ]; then
     sudo rm -rf /usr/bin/nvim
+		if [ -d "/squashfs-root" ]; then
+				sudo rm -rf /squashfs-root
+		fi
 fi
 echo "Installing neovim..."
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
