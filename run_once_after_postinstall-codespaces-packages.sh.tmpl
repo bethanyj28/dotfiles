@@ -13,5 +13,8 @@ nvim --headless -c 'Copilot setup' +qa
 echo "Installing tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins
 
+echo "Setting up fzf..."
+printf 'y\ny\nn\n' | ~/.fzf/install
+
 sudo chsh -s "$(which zsh)" "$(whoami)"
 {{end -}}
