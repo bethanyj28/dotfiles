@@ -19,6 +19,10 @@ if ! dpkg -s ${PACKAGES_NEEDED} > /dev/null 2>&1; then
     sudo apt-get -y -q install ${PACKAGES_NEEDED}
 fi
 
+# install fzf (apt has an ancient version, so install from github)
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+printf 'y\ny\nn\n' | ~/.fzf/install
+
 # install latest neovim
 if [ -f "/usr/bin/nvim" ]; then
     sudo rm -rf /usr/bin/nvim
