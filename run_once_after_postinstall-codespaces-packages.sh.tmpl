@@ -10,6 +10,10 @@ nvim --headless "+Lazy! sync" +qa
 nvim --headless -c 'GoInstallBinaries' +qa
 nvim --headless -c 'Copilot setup' +qa
 
+# install fzf (apt has an ancient version, so install from github)
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+printf 'y\ny\nn\n' | ~/.fzf/install
+
 echo "Installing tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins
 
