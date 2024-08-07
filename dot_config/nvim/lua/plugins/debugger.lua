@@ -5,6 +5,7 @@ return {
       "mfussenegger/nvim-dap",
       "williamboman/mason.nvim",
       "theHamsta/nvim-dap-virtual-text",
+      "nvim-neotest/nvim-nio",
     },
     config = function()
       require("dapui").setup()
