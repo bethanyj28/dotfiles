@@ -48,7 +48,7 @@ local servers = {
     },
   },
   rust_analyzer = {},
-  tsserver = {
+  ts_ls = {
     filetypes = {
       'javascript',
       'javascriptreact',
@@ -62,7 +62,6 @@ local servers = {
     },
   },
 	elixirls = {},
-	sorbet = {},
 	yamlls = {
 		schemas = {
     	["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",

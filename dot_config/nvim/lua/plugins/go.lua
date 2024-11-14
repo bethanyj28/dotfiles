@@ -42,7 +42,6 @@ return {
 				-- quick type
 				quick_type_flags = {'--just-types'},
 			})
-      
       local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*.go",
