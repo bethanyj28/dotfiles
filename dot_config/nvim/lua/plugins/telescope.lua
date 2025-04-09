@@ -4,6 +4,7 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-fzy-native.nvim", build = "make" },
+			{ "nvim-telescope/telescope-ui-select.nvim" },
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -43,6 +44,7 @@ return {
 			vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 			telescope.load_extension('fzy_native')
+			telescope.load_extension('ui-select')
 		end,
 	}
 }
