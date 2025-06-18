@@ -125,6 +125,7 @@ return {
 
       -- Additional lua configuration, makes nvim dev better
       "folke/neodev.nvim",
+      "williamboman/mason.nvim",
     },
     config = function()
       require("neodev").setup()
@@ -132,8 +133,8 @@ return {
     end,
   },
   {
+    "williamboman/mason.nvim",
     dependencies = {
-      "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
       "hrsh7th/nvim-cmp",
