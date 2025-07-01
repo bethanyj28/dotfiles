@@ -135,7 +135,7 @@ return {
   {
     "williamboman/mason.nvim",
     dependencies = {
-      "williamboman/mason-lspconfig.nvim",
+      "mason-org/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
       "hrsh7th/nvim-cmp",
     },
@@ -149,15 +149,15 @@ return {
       mason_lspconfig.setup {
         ensure_installed = vim.tbl_keys(servers),
       }
-      mason_lspconfig.setup_handlers {
-        function(server_name)
-          require("lspconfig")[server_name].setup {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[server_name],
-          }
-        end,
-      }
+      local lspconfig = require("lspconfig")
+
+      for server_name, server_config in pairs(servers) do
+        lspconfig[server_name].setup({
+          capabilities = capabilities,
+          on_attach = on_attach,
+          settings = server_config,
+        })
+      end
     end,
   },
 }
