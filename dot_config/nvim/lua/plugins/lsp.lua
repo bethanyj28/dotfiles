@@ -145,10 +145,11 @@ return {
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-      local mason_lspconfig = require "mason-lspconfig"
-      mason_lspconfig.setup {
+      require("mason-lspconfig").setup({
         ensure_installed = vim.tbl_keys(servers),
-      }
+        automatic_installation = false,
+      })
+
       local lspconfig = require("lspconfig")
 
       for server_name, server_config in pairs(servers) do
