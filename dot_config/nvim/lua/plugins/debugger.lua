@@ -11,11 +11,11 @@ return {
       require("dapui").setup()
       local dap, dapui = require("dap"), require("dapui")
       vim.keymap.set("n", "<leader>dd", dap.continue)
-			vim.keymap.set("n", "<leader>dl", dap.step_over)
-			vim.keymap.set("n", "<leader>dj", dap.step_into)
-			vim.keymap.set("n", "<leader>dk", dap.step_out)
-			vim.keymap.set("n", "<leader>dh", dap.step_back)
-			vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
+      vim.keymap.set("n", "<leader>dl", dap.step_over)
+      vim.keymap.set("n", "<leader>dj", dap.step_into)
+      vim.keymap.set("n", "<leader>dk", dap.step_out)
+      vim.keymap.set("n", "<leader>dh", dap.step_back)
+      vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
 
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
@@ -30,5 +30,5 @@ return {
         dapui.close()
       end
     end,
-  }
+  },
 }
