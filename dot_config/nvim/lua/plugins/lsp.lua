@@ -117,6 +117,34 @@ return {
     config = function()
       require("neodev").setup()
       require("fidget").setup()
+      
+      -- Improve LSP UI
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+        border = "rounded",
+        max_width = 80,
+        max_height = 20,
+      })
+      
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+        border = "rounded",
+        max_width = 80,
+        max_height = 20,
+      })
+      
+      -- Diagnostic configuration
+      vim.diagnostic.config({
+        virtual_text = true,
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = false,
+        float = {
+          border = "rounded",
+          source = "always",
+          header = "",
+          prefix = "",
+        },
+      })
     end,
   },
   {
