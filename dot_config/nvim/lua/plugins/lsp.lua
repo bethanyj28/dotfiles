@@ -10,22 +10,6 @@ local servers = {
       validate = true,
     },
   },
-  gopls = {
-    analyses = {
-      unusedparams = true,
-    },
-    staticcheck = true,
-    linksInHover = false,
-    codelenses = {
-      generate = true,
-      gc_details = true,
-      regenerate_cgo = true,
-      tidy = true,
-      upgrade_depdendency = true,
-      vendor = true,
-    },
-    usePlaceholders = true,
-  },
   lua_ls = {
     Lua = {
       runtime = {
@@ -74,7 +58,6 @@ local servers = {
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(client, bufnr)
-  print("LSP on_attach called for", client.name, "buffer", bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -92,7 +75,7 @@ local on_attach = function(client, bufnr)
   nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
   nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-  nmap("gd", function() require("telescope.builtin").lsp_definitions() end, "[G]oto [D]efinition")
+  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
   nmap("gr", function() require("telescope.builtin").lsp_references() end, "[G]oto [R]eferences")
   nmap("gI", function() require("telescope.builtin").lsp_implementations() end, "[G]oto [I]mplementation")
   nmap("<leader>D", function() require("telescope.builtin").lsp_type_definitions() end, "Type [D]efinition")
