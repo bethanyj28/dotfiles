@@ -169,11 +169,29 @@ return {
       -- mason-lspconfig provides server definitions, we add our config
       require("mason-lspconfig").setup_handlers({
         function(server_name)
-          vim.lsp.config[server_name] = {
+          local server_config = servers[server_name] or {}
+          
+          -- Build the configuration for vim.lsp.config
+          local config = {
             capabilities = capabilities,
             on_attach = on_attach,
-            settings = servers[server_name] or {},
           }
+          
+          -- Add filetypes if specified (for servers like ts_ls)
+          if server_config.filetypes then
+            config.filetypes = server_config.filetypes
+          end
+          
+          -- Add init_options if specified (for servers like ts_ls)
+          if server_config.init_options then
+            config.init_options = server_config.init_options
+          end
+          
+          -- Add settings (for servers like lua_ls, cssls, yamlls, etc.)
+          -- Most servers have their settings as the entire config table
+          config.settings = server_config
+          
+          vim.lsp.config[server_name] = config
           vim.lsp.enable(server_name)
         end,
       })
