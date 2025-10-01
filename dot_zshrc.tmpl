@@ -48,6 +48,34 @@ function slop {
 #go
 alias gop='/usr/local/share/goproxy-init.sh --override'
 
+# SSH with Ghostty terminfo transfer
+# Usage: ssh-ghostty user@host [additional ssh args]
+# Automatically transfers Ghostty's terminfo to the remote server
+function ssh-ghostty() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: ssh-ghostty user@host [additional ssh args]"
+        return 1
+    fi
+    
+    # Check if infocmp is available
+    if ! command -v infocmp &> /dev/null; then
+        echo "Error: infocmp command not found. Please install ncurses-bin or similar package."
+        return 1
+    fi
+    
+    # Check if xterm-ghostty terminfo exists locally
+    if ! infocmp xterm-ghostty &> /dev/null; then
+        echo "Warning: xterm-ghostty terminfo not found locally."
+        echo "This function is meant to be used from a Ghostty terminal."
+        echo "Falling back to regular SSH..."
+        command ssh "$@"
+        return $?
+    fi
+    
+    # Transfer terminfo and then connect
+    infocmp -x xterm-ghostty | command ssh "$@" -- tic -x - && command ssh "$@"
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

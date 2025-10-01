@@ -21,6 +21,19 @@ else
   else
     chezmoi=chezmoi
   fi
+  
+  # Install Ghostty terminfo for users connecting from Ghostty terminal
+  echo "Installing Ghostty terminfo..."
+  mkdir -p "$HOME/.terminfo"
+  
+  # Create xterm-ghostty terminfo based on xterm-256color
+  # This provides basic compatibility for Ghostty terminal users connecting to Codespaces
+  infocmp xterm-256color | sed 's/xterm-256color|xterm with 256 colors/xterm-ghostty|Ghostty terminal emulator/' > /tmp/xterm-ghostty.terminfo
+  
+  # Compile and install the terminfo
+  tic -x -o "$HOME/.terminfo" /tmp/xterm-ghostty.terminfo
+  rm /tmp/xterm-ghostty.terminfo
+  echo "Ghostty terminfo installed successfully"
 fi
 
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
