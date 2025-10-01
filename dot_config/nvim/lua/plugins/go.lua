@@ -5,6 +5,7 @@ return {
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
+      "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
       -- Define the same on_attach function as used in lsp.lua
