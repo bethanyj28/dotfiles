@@ -16,7 +16,7 @@ A new evolution of my dotfiles utilizing chezmoi for management. For now primari
 
 **Key Bindings:**
 - `<Tab>` - Jump to or apply next edit suggestion
-- `<C-.>` - Switch focus to/from Sidekick CLI
+- `<leader>af` - Switch focus to/from Sidekick CLI
 - `<leader>aa` - Toggle Sidekick CLI
 - `<leader>as` - Select AI CLI tool
 

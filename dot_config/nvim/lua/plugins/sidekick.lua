@@ -22,7 +22,7 @@ return {
       desc = "Goto/Apply Next Edit Suggestion",
     },
     {
-      "<c-.>",
+      "<leader>af",
       function()
         require("sidekick.cli").focus()
       end,
