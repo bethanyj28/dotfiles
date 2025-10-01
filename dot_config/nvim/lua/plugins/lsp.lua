@@ -165,15 +165,48 @@ return {
         automatic_installation = false,
       })
 
-      -- Set up each LSP server manually
-      local lspconfig = require("lspconfig")
-      for server_name, server_config in pairs(servers) do
-        lspconfig[server_name].setup({
-          capabilities = capabilities,
-          on_attach = on_attach,
-          settings = server_config,
-        })
-      end
+      -- Set up each LSP server using vim.lsp.config API
+      -- mason-lspconfig provides server definitions, we add our config
+      require("mason-lspconfig").setup_handlers({
+        function(server_name)
+          local server_config = servers[server_name] or {}
+          
+          -- Build the configuration for vim.lsp.config
+          local config = {
+            capabilities = capabilities,
+            on_attach = on_attach,
+          }
+          
+          -- Add filetypes if specified (for servers like ts_ls)
+          if server_config.filetypes then
+            config.filetypes = server_config.filetypes
+          end
+          
+          -- Add init_options if specified (for servers like ts_ls)
+          if server_config.init_options then
+            config.init_options = server_config.init_options
+          end
+          
+          -- Add settings, excluding top-level config properties
+          -- Only process settings if server_config is not empty
+          if next(server_config) ~= nil then
+            local settings = {}
+            for k, v in pairs(server_config) do
+              if k ~= "filetypes" and k ~= "init_options" then
+                settings[k] = v
+              end
+            end
+            
+            -- Only set settings if there are any after filtering
+            if next(settings) ~= nil then
+              config.settings = settings
+            end
+          end
+          
+          vim.lsp.config[server_name] = config
+          vim.lsp.enable(server_name)
+        end,
+      })
     end,
   },
 }
