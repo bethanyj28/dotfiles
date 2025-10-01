@@ -150,7 +150,7 @@ return {
   {
     "williamboman/mason.nvim",
     dependencies = {
-      "mason-org/mason-lspconfig.nvim",
+      "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
       "hrsh7th/nvim-cmp",
     },
