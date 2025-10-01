@@ -1,4 +1,8 @@
 local servers = {
+  copilot = {
+    -- Copilot LSP configuration for sidekick.nvim
+    -- No specific settings needed for basic functionality
+  },
   cssls = {
     css = {
       validate = true,
