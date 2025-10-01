@@ -188,17 +188,19 @@ return {
           end
           
           -- Add settings, excluding top-level config properties
-          -- Clone server_config and remove non-settings properties
-          local settings = {}
-          for k, v in pairs(server_config) do
-            if k ~= "filetypes" and k ~= "init_options" then
-              settings[k] = v
+          -- Only process settings if server_config is not empty
+          if next(server_config) ~= nil then
+            local settings = {}
+            for k, v in pairs(server_config) do
+              if k ~= "filetypes" and k ~= "init_options" then
+                settings[k] = v
+              end
             end
-          end
-          
-          -- Only set settings if there are any
-          if next(settings) ~= nil then
-            config.settings = settings
+            
+            -- Only set settings if there are any after filtering
+            if next(settings) ~= nil then
+              config.settings = settings
+            end
           end
           
           vim.lsp.config[server_name] = config
