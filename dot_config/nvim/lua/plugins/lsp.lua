@@ -187,9 +187,19 @@ return {
             config.init_options = server_config.init_options
           end
           
-          -- Add settings (for servers like lua_ls, cssls, yamlls, etc.)
-          -- Most servers have their settings as the entire config table
-          config.settings = server_config
+          -- Add settings, excluding top-level config properties
+          -- Clone server_config and remove non-settings properties
+          local settings = {}
+          for k, v in pairs(server_config) do
+            if k ~= "filetypes" and k ~= "init_options" then
+              settings[k] = v
+            end
+          end
+          
+          -- Only set settings if there are any
+          if next(settings) ~= nil then
+            config.settings = settings
+          end
           
           vim.lsp.config[server_name] = config
           vim.lsp.enable(server_name)
