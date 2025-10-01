@@ -166,14 +166,17 @@ return {
       })
 
       -- Set up each LSP server using vim.lsp.config API
-      for server_name, server_config in pairs(servers) do
-        vim.lsp.config[server_name] = {
-          capabilities = capabilities,
-          on_attach = on_attach,
-          settings = server_config,
-        }
-        vim.lsp.enable(server_name)
-      end
+      -- mason-lspconfig provides server definitions, we add our config
+      require("mason-lspconfig").setup_handlers({
+        function(server_name)
+          vim.lsp.config[server_name] = {
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = servers[server_name] or {},
+          }
+          vim.lsp.enable(server_name)
+        end,
+      })
     end,
   },
 }
