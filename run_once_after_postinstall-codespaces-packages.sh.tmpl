@@ -8,10 +8,6 @@ nvim --headless "+Lazy! sync" +qa
 nvim --headless -c 'GoInstallBinaries' +qa
 nvim --headless -c 'Copilot setup' +qa
 
-echo "Installing GitHub Copilot CLI..."
-nvm install --lts
-npm install -g @githubnext/github-copilot-cli
-
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
 echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
@@ -19,6 +15,10 @@ sudo apt update && sudo apt install glow
 
 echo "Installing tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins
+
+echo "Installing GitHub Copilot CLI..."
+nvm install --lts
+npm install -g @githubnext/github-copilot-cli
 
 sudo chsh -s "$(which zsh)" "$(whoami)"
 {{end -}}
