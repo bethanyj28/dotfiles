@@ -32,7 +32,17 @@ return {
           "vimdoc",
         },
 
-        highlight = { enable = true },
+        highlight = { 
+          enable = true 
+          disable = function(lang, buf)
+            local filename = vim.api.nvim_buf_get_name(buf)
+            -- Disable treesitter for .tmpl files
+            if filename:match("%.tmpl$") then
+              return true
+            end
+            return false
+          end
+        },
         indent = { enable = true, disable = { "python" } },
         incremental_selection = {
           enable = true,
