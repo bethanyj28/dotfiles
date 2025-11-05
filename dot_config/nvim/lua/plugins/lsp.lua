@@ -92,7 +92,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
     vim.lsp.buf.format()
   end, { desc = "Format current buffer with LSP" })
-  
+
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
@@ -107,24 +107,25 @@ return {
       -- Additional lua configuration, makes nvim dev better
       "folke/neodev.nvim",
       "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
     },
     config = function()
       require("neodev").setup()
       require("fidget").setup()
-      
+
       -- Improve LSP UI
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
         border = "rounded",
         max_width = 80,
         max_height = 20,
       })
-      
+
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
         border = "rounded",
         max_width = 80,
         max_height = 20,
       })
-      
+
       -- Diagnostic configuration
       vim.diagnostic.config({
         virtual_text = true,
@@ -143,14 +144,18 @@ return {
   },
   {
     "williamboman/mason.nvim",
-    dependencies = {
-      "williamboman/mason-lspconfig.nvim",
-      "neovim/nvim-lspconfig",
-      "hrsh7th/cmp-nvim-lsp", -- Provides LSP capabilities for completion
-    },
     config = function()
       require("mason").setup()
-
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
+      "hrsh7th/cmp-nvim-lsp",
+    },
+    config = function()
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
@@ -159,30 +164,26 @@ return {
         automatic_installation = false,
       })
 
-      -- Set up each LSP server using traditional lspconfig
+      -- Set up each LSP server
       local lspconfig = require("lspconfig")
-      local mason_lspconfig = require("mason-lspconfig")
-      
-      mason_lspconfig.setup_handlers({
+
+      require("mason-lspconfig").setup_handlers({
         function(server_name)
           local server_config = servers[server_name] or {}
-          
+
           -- Build the configuration
           local config = {
             capabilities = capabilities,
             on_attach = on_attach,
           }
-          
           -- Add filetypes if specified (for servers like tsserver)
           if server_config.filetypes then
             config.filetypes = server_config.filetypes
           end
-          
           -- Add init_options if specified (for servers like tsserver)
           if server_config.init_options then
             config.init_options = server_config.init_options
           end
-          
           -- Add settings, excluding top-level config properties
           if next(server_config) ~= nil then
             local settings = {}
@@ -191,13 +192,11 @@ return {
                 settings[k] = v
               end
             end
-            
             -- Only set settings if there are any after filtering
             if next(settings) ~= nil then
               config.settings = settings
             end
           end
-          
           -- Use traditional lspconfig setup
           lspconfig[server_name].setup(config)
         end,
