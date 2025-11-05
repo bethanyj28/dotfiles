@@ -4,11 +4,12 @@
 set -ex
 
 echo "Running nvim setup..."
-# nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-# nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' # just in case: https://github.com/wbthomason/packer.nvim/issues/502#issuecomment-1135331998
 nvim --headless "+Lazy! sync" +qa
 nvim --headless -c 'GoInstallBinaries' +qa
 nvim --headless -c 'Copilot setup' +qa
+
+echo "Installing GitHub Copilot CLI..."
+npm install -g @githubnext/github-copilot-cli
 
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
