@@ -159,30 +159,31 @@ return {
         automatic_installation = false,
       })
 
-      -- Set up each LSP server using vim.lsp.config API
-      -- mason-lspconfig provides server definitions, we add our config
-      require("mason-lspconfig").setup_handlers({
+      -- Set up each LSP server using traditional lspconfig
+      local lspconfig = require("lspconfig")
+      local mason_lspconfig = require("mason-lspconfig")
+      
+      mason_lspconfig.setup_handlers({
         function(server_name)
           local server_config = servers[server_name] or {}
           
-          -- Build the configuration for vim.lsp.config
+          -- Build the configuration
           local config = {
             capabilities = capabilities,
             on_attach = on_attach,
           }
           
-          -- Add filetypes if specified (for servers like ts_ls)
+          -- Add filetypes if specified (for servers like tsserver)
           if server_config.filetypes then
             config.filetypes = server_config.filetypes
           end
           
-          -- Add init_options if specified (for servers like ts_ls)
+          -- Add init_options if specified (for servers like tsserver)
           if server_config.init_options then
             config.init_options = server_config.init_options
           end
           
           -- Add settings, excluding top-level config properties
-          -- Only process settings if server_config is not empty
           if next(server_config) ~= nil then
             local settings = {}
             for k, v in pairs(server_config) do
@@ -197,8 +198,8 @@ return {
             end
           end
           
-          vim.lsp.config[server_name] = config
-          vim.lsp.enable(server_name)
+          -- Use traditional lspconfig setup
+          lspconfig[server_name].setup(config)
         end,
       })
     end,
