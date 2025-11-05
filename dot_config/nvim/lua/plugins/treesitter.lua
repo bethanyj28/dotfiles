@@ -33,7 +33,7 @@ return {
         },
 
         highlight = { 
-          enable = true 
+          enable = true,
           disable = function(lang, buf)
             local filename = vim.api.nvim_buf_get_name(buf)
             -- Disable treesitter for .tmpl files
