@@ -107,7 +107,6 @@ return {
       -- Additional lua configuration, makes nvim dev better
       "folke/neodev.nvim",
       "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
     },
     config = function()
       require("neodev").setup()
@@ -144,18 +143,14 @@ return {
   },
   {
     "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
     dependencies = {
-      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
-      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp", -- Provides LSP capabilities for completion
     },
     config = function()
+      require("mason").setup()
+
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
@@ -164,27 +159,30 @@ return {
         automatic_installation = false,
       })
 
-      -- Set up each LSP server
-      local lspconfig = require("lspconfig")
-
+      -- Set up each LSP server using vim.lsp.config API
+      -- mason-lspconfig provides server definitions, we add our config
       require("mason-lspconfig").setup_handlers({
         function(server_name)
           local server_config = servers[server_name] or {}
 
-          -- Build the configuration
+          -- Build the configuration for vim.lsp.config
           local config = {
             capabilities = capabilities,
             on_attach = on_attach,
           }
-          -- Add filetypes if specified (for servers like tsserver)
+
+          -- Add filetypes if specified (for servers like ts_ls)
           if server_config.filetypes then
             config.filetypes = server_config.filetypes
           end
-          -- Add init_options if specified (for servers like tsserver)
+
+          -- Add init_options if specified (for servers like ts_ls)
           if server_config.init_options then
             config.init_options = server_config.init_options
           end
+
           -- Add settings, excluding top-level config properties
+          -- Only process settings if server_config is not empty
           if next(server_config) ~= nil then
             local settings = {}
             for k, v in pairs(server_config) do
@@ -192,13 +190,15 @@ return {
                 settings[k] = v
               end
             end
+
             -- Only set settings if there are any after filtering
             if next(settings) ~= nil then
               config.settings = settings
             end
           end
-          -- Use traditional lspconfig setup
-          lspconfig[server_name].setup(config)
+
+          vim.lsp.config[server_name] = config
+          vim.lsp.enable(server_name)
         end,
       })
     end,

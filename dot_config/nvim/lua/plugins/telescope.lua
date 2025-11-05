@@ -38,8 +38,6 @@ return {
       vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep, { desc = "[S]earch by [G]rep" })
       vim.keymap.set("n", "<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
       vim.keymap.set("n", "<leader>km", require("telescope.builtin").keymaps, { desc = "[K]eymap [M]enu" })
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
       vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
       vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
