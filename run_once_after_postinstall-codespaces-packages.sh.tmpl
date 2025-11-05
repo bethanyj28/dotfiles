@@ -9,6 +9,7 @@ nvim --headless -c 'GoInstallBinaries' +qa
 nvim --headless -c 'Copilot setup' +qa
 
 echo "Installing GitHub Copilot CLI..."
+nvm install --lts
 npm install -g @githubnext/github-copilot-cli
 
 sudo mkdir -p /etc/apt/keyrings
