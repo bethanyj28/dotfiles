@@ -17,10 +17,10 @@ tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
+brew "1password-cli"
 brew "azure-cli"
 brew "bash"
 brew "bat"
-brew "bitwarden-cli"
 brew "fzf"
 brew "gh"
 brew "jq"
@@ -41,8 +41,8 @@ cask "font-jetbrains-mono-nerd-font"
 cask "raycast"
 cask "telegram"
 cask "zoom"
-cask "zsa-wally"
 EOF
 
 gh auth login
+gh extension install dlvhdr/gh-dash
 {{end -}}
