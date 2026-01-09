@@ -92,3 +92,8 @@ export GONOSUMDB='github.com/github/*'
 # make it not ugly
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 {{ end }}
+
+{{ if .work }}
+ANTHROPIC_BASE_URL={{ onepasswordRead "op://Private/CLAUDE_CODE/add more/url" }}
+ANTHROPIC_AUTH_TOKEN={{ onepasswordRead "op://Private/CLAUDE_CODE/add more/password" }}
+{{ end }}
