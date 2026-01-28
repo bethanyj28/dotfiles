@@ -29,6 +29,42 @@ alias main='git checkout main && git pull'
 alias gco='git checkout'
 alias nb='git checkout -b'
 alias yeet='git stash'
+# git worktrees
+alias wtl='git worktree list'
+alias wtp='git worktree prune'
+function wta() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: wta <branch-name> [base-branch]"
+        echo "Creates worktree at ../<repo>-<branch-name>"
+        return 1
+    fi
+    local branch=$1
+    local base=${2:-HEAD}
+    local repo_name=$(basename $(git rev-parse --show-toplevel))
+    local worktree_path="../${repo_name}-${branch}"
+    git worktree add -b "$branch" "$worktree_path" "$base"
+    echo "Created worktree at $worktree_path"
+    echo "To start: cd $worktree_path && claude"
+}
+function wtr() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: wtr <branch-name>"
+        return 1
+    fi
+    local branch=$1
+    local repo_name=$(basename $(git rev-parse --show-toplevel))
+    local worktree_path="../${repo_name}-${branch}"
+    git worktree remove "$worktree_path"
+}
+function wtc() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: wtc <branch-name>"
+        return 1
+    fi
+    local branch=$1
+    local repo_name=$(basename $(git rev-parse --show-toplevel))
+    cd "../${repo_name}-${branch}"
+}
 # docker
 alias dogs='docker logs -t -f'
 alias nuns="docker rmi -f $(docker images | grep '^<none>' | awk '{print $3}')"
