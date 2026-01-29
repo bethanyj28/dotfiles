@@ -36,13 +36,21 @@ function wta() {
     if [ $# -lt 1 ]; then
         echo "Usage: wta <branch-name> [base-branch]"
         echo "Creates worktree at ../<repo>-<branch-name>"
+        echo "Defaults to latest origin/main if no base-branch specified"
         return 1
     fi
     local branch=$1
-    local base=${2:-HEAD}
+    local base=${2:-origin/main}
     local repo_root=$(git rev-parse --show-toplevel)
     local repo_name=$(basename "$repo_root")
     local worktree_path="../${repo_name}-${branch}"
+
+    # Fetch latest main if using default base
+    if [ -z "$2" ]; then
+        echo "Fetching latest main..."
+        git fetch origin main
+    fi
+
     git worktree add -b "$branch" "$worktree_path" "$base"
 
     # Copy gitignored files to the new worktree
