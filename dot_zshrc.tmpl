@@ -40,9 +40,25 @@ function wta() {
     fi
     local branch=$1
     local base=${2:-HEAD}
-    local repo_name=$(basename $(git rev-parse --show-toplevel))
+    local repo_root=$(git rev-parse --show-toplevel)
+    local repo_name=$(basename "$repo_root")
     local worktree_path="../${repo_name}-${branch}"
     git worktree add -b "$branch" "$worktree_path" "$base"
+
+    # Copy gitignored files to the new worktree
+    local ignored_files=$(git -C "$repo_root" ls-files --others --ignored --exclude-standard)
+    if [ -n "$ignored_files" ]; then
+        echo "Copying gitignored files..."
+        echo "$ignored_files" | while IFS= read -r file; do
+            local src="$repo_root/$file"
+            local dest="$worktree_path/$file"
+            local dest_dir=$(dirname "$dest")
+            mkdir -p "$dest_dir"
+            cp "$src" "$dest"
+        done
+        echo "Copied gitignored files to worktree"
+    fi
+
     echo "Created worktree at $worktree_path"
     echo "To start: cd $worktree_path && claude"
 }
