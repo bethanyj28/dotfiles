@@ -63,14 +63,19 @@ function wta() {
     echo "To start: cd $worktree_path && claude"
 }
 function wtr() {
+    local force=""
+    if [ "$1" = "-f" ] || [ "$1" = "--force" ]; then
+        force="--force"
+        shift
+    fi
     if [ $# -lt 1 ]; then
-        echo "Usage: wtr <branch-name>"
+        echo "Usage: wtr [-f|--force] <branch-name>"
         return 1
     fi
     local branch=$1
     local repo_name=$(basename $(git rev-parse --show-toplevel))
     local worktree_path="../${repo_name}-${branch}"
-    git worktree remove "$worktree_path"
+    git worktree remove $force "$worktree_path"
 }
 function wtc() {
     if [ $# -lt 1 ]; then
@@ -150,4 +155,5 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 {{ if .work }}
 export ANTHROPIC_BASE_URL={{ onepasswordRead "op://Private/CLAUDE_CODE/add more/url" }}
 export ANTHROPIC_AUTH_TOKEN={{ onepasswordRead "op://Private/CLAUDE_CODE/add more/password" }}
+alias capi='cd ~/code/copilot-api'
 {{ end }}
