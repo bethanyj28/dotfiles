@@ -145,6 +145,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+export ANTHROPIC_BASE_URL={{ onepasswordRead "op://Private/CLAUDE_CODE/add more/url" }}
+export ANTHROPIC_AUTH_TOKEN={{ onepasswordRead "op://Private/CLAUDE_CODE/add more/password" }}
 export EDITOR="nvim"
 export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$HOME/.local/bin:$PATH"
@@ -161,7 +163,5 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 {{ end }}
 
 {{ if .work }}
-export ANTHROPIC_BASE_URL={{ onepasswordRead "op://Private/CLAUDE_CODE/add more/url" }}
-export ANTHROPIC_AUTH_TOKEN={{ onepasswordRead "op://Private/CLAUDE_CODE/add more/password" }}
 alias capi='cd ~/code/copilot-api'
 {{ end }}
