@@ -1,66 +1,52 @@
-# CLAUDE.md
+## Workflow Orchestration
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+1. Plan Mode Default
+- Enter plan mode for ANY non-trivial task (3+ steps or architectural decisions)
+- If something goes sideways, STOP and re-plan immediately – don't keep pushing
+- Use plan mode for verification steps, not just building
+- Write detailed specs upfront to reduce ambiguity
 
-## About This Repository
+2. Subagent Strategy
+- Use subagents liberally to keep main context window clean
+- Offload research, exploration, and parallel analysis to subagents
+- For complex problems, throw more compute at it via subagents
+- One task per subagent for focused execution
 
-This is a personal dotfiles repository managed by [chezmoi](https://chezmoi.io/). It contains configuration files for development environments, primarily targeting Codespaces with some macOS support.
+3. Self-Improvement Loop
+- After ANY correction from the user: update `tasks/lessons .md` with the pattern
+- Write rules for yourself that prevent the same mistake
+- Ruthlessly iterate on these lessons until mistake rate drops
+- Review lessons at session start for relevant project
 
-## Key Commands
+4. Verification Before Done
+- Never mark a task complete without proving it works
+- Diff behavior between main and your changes when relevant
+- Ask yourself: "Would a staff engineer approve this?"
+- Run tests, check logs, demonstrate correctness
 
-### Managing Dotfiles
-- `chezmoi apply` - Apply configuration changes to target files
-- `chezmoi diff` - Show differences between source and target files
-- `chezmoi init --apply` - Initialize chezmoi with this repository and apply configurations
-- `./install.sh` - Main installation script (Codespaces-specific)
+5. Demand Elegance (Balanced)
+- For non-trivial changes: pause and ask "is there a more elegant way?"
+- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution"
+- Skip this for simple, obvious fixes – don't over-engineer
+- Challenge your own work before presenting it
 
-### Development Environment
-- `nvim --headless "+Lazy! sync" +qa` - Sync Neovim plugins (triggered automatically by chezmoi)
-- `v` or `nvim` - Open Neovim editor
-- Package managers are installed via platform-specific scripts:
-  - macOS: Homebrew with extensive package list
-  - Codespaces: apt packages
+6. Autonomous Bug Fixing
+- When given a bug report: just fix it. Don't ask for hand-holding
+- Point at logs, errors, failing tests – then resolve them
+- Zero context switching required from the user
+- Go fix failing CI tests without being told how
 
-## Architecture
+Task Management
 
-### File Structure
-- `dot_*` files are managed by chezmoi and become dotfiles in the home directory
-- `run_*` scripts are executed by chezmoi during apply operations:
-  - `run_once_before_*` - Run once before applying files
-  - `run_once_after_*` - Run once after applying files  
-  - `run_onchange_*` - Run when source files change
-- `.tmpl` files are chezmoi templates with conditional logic
+1. **Plan First**: Write plan to `tasks/todo .md` with checkable items
+2. **Verify Plan**: Check in before starting implementation
+3. **Track Progress**: Mark items complete as you go
+4. **Explain Changes**: High-level summary at each step
+5. **Document Results**: Add review section to `tasks/todo .md`
+6. **Capture Lessons**: Update `tasks/lessons .md` after corrections
 
-### Key Configurations
-- **Neovim**: Modern Lua-based configuration using Lazy.nvim plugin manager
-  - Leader key: `,` (comma)
-  - Plugins organized in `dot_config/nvim/lua/plugins/`
-  - Uses LSP, treesitter, telescope, and other modern Neovim features
-- **Tmux**: Terminal multiplexer with vim-style keybindings
-  - Prefix: `Ctrl-Space`
-  - Mouse support enabled
-  - Seamless navigation with Neovim
-- **Zsh**: Shell configuration with oh-my-zsh and custom aliases
-  - Theme: refined
-  - Extensive Git, Docker, and development aliases
-  - Uses `jk` as escape sequence in vi mode
+## Core Principles
 
-### Platform Support
-- Primary: GitHub Codespaces
-- Secondary: macOS (Darwin)
-- Conditional configuration using chezmoi templates based on environment
-
-### Package Management
-The repository automatically installs development tools including:
-- Core: neovim, tmux, zsh, git, gh (GitHub CLI)
-- Languages: Go, Python, Ruby, Node.js (via nvm)
-- Utilities: ripgrep, fzf, bat, jq, bitwarden-cli
-- macOS specific: Homebrew casks for GUI applications
-
-## Development Workflow
-
-When modifying configurations:
-1. Edit source files in the chezmoi directory
-2. Run `chezmoi diff` to preview changes
-3. Run `chezmoi apply` to apply changes
-4. Plugin sync and package installations happen automatically via run scripts
+- **Simplicity First**: Make every change as simple as possible. Impact minimal code.
+- **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
+- **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.
