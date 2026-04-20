@@ -76,8 +76,8 @@ local on_attach = function(client, bufnr)
   nmap("<leader>ds", function() require("telescope.builtin").lsp_document_symbols() end, "[D]ocument [S]ymbols")
   nmap("<leader>ws", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, "[W]orkspace [S]ymbols")
   -- See `:help K` for why this keymap
-  nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-  nmap("<C-p>", vim.lsp.buf.signature_help, "Signature Documentation")
+  nmap("K", function() vim.lsp.buf.hover({ border = "rounded" }) end, "Hover Documentation")
+  nmap("<C-p>", function() vim.lsp.buf.signature_help({ border = "rounded" }) end, "Signature Documentation")
   -- Lesser used LSP functionality
   nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
   nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
@@ -105,17 +105,6 @@ return {
     config = function()
       require("neodev").setup()
       require("fidget").setup()
-      -- Improve LSP UI
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = "rounded",
-        max_width = 80,
-        max_height = 20,
-      })
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-        border = "rounded",
-        max_width = 80,
-        max_height = 20,
-      })
       -- Diagnostic configuration
       vim.diagnostic.config({
         virtual_text = true,
@@ -125,7 +114,7 @@ return {
         severity_sort = false,
         float = {
           border = "rounded",
-          source = "always",
+          source = true,
           header = "",
           prefix = "",
         },
