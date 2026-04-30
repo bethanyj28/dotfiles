@@ -4,16 +4,14 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "nvim-telescope/telescope.nvim",
     },
     config = function()
-      -- load refactoring Telescope extension
-      require("telescope").load_extension("refactoring")
+      require("refactoring").setup()
 
       vim.keymap.set(
         { "n", "x" },
         "<leader>rr",
-        function() require("telescope").extensions.refactoring.refactors() end
+        function() require("refactoring").select_refactor() end
       )
     end,
   },
