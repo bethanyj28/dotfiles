@@ -17,8 +17,10 @@ echo "Installing tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins
 
 echo "Installing GitHub Copilot CLI..."
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 nvm install --lts
-npm install -g @githubnext/github-copilot-cli
+npm install -g @github/copilot
 
 sudo chsh -s "$(which zsh)" "$(whoami)"
 {{end -}}
