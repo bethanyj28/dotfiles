@@ -3,6 +3,12 @@
 
 set -ex
 
+echo "Installing Node.js and npm packages..."
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+nvm install --lts
+npm install -g @github/copilot tree-sitter-cli
+
 echo "Running nvim setup..."
 nvim --headless "+Lazy! sync" +qa
 nvim --headless -c 'GoInstallBinaries' +qa
@@ -15,12 +21,6 @@ sudo apt update && sudo apt install glow
 
 echo "Installing tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins
-
-echo "Installing GitHub Copilot CLI..."
-export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-nvm install --lts
-npm install -g @github/copilot
 
 sudo chsh -s "$(which zsh)" "$(whoami)"
 {{end -}}
