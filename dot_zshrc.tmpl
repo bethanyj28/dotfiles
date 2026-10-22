@@ -21,10 +21,8 @@ setopt HIST_FIND_NO_DUPS
 #
 # vim
 alias v='nvim'
-alias swap='cd ~/.local/share/nvim/swap'
 # git
 alias gs='git status'
-alias master='git checkout master && git pull'
 alias main='git checkout main && git pull'
 alias gco='git checkout'
 alias nb='git checkout -b'
@@ -100,17 +98,10 @@ alias dogs='docker logs -t -f'
 alias ll='ls -al'
 # Formatting commands
 alias jsfmt='prettier --write'
-alias gofmt='gofmt -w'
 alias jsonf='jq .'
 alias yamlf='yq eval . -P'
-#gh
-alias ghgh='gh cs create -R github/github -s'
+# ssh
 alias sshpls='ssh-add .ssh/id_ed25519'
-function slop {
-    gh slack $1 | pbcopy
-}
-#go
-alias gop='/usr/local/share/goproxy-init.sh --override'
 
 # SSH with Ghostty terminfo transfer
 # Usage: ssh-ghostty user@host [additional ssh args]
@@ -157,8 +148,4 @@ export GONOSUMDB='github.com/github/*'
 
 # make it not ugly
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-{{ end }}
-
-{{ if .work }}
-alias capi='cd ~/code/capi'
 {{ end }}
