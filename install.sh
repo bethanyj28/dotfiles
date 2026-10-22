@@ -2,26 +2,24 @@
 
 set -ex # -e: exit on error -x: log to console
 
-if [ -z "${CODESPACES}" ]; then
-  echo "Not codespaces - skipping"
-else
-  if [ ! "$(command -v chezmoi)" ]; then
-    echo "Installing chezmoi..."
+if [ ! "$(command -v chezmoi)" ]; then
+  echo "Installing chezmoi..."
 
-    bin_dir="$HOME/.local/bin"
-    chezmoi="$bin_dir/chezmoi"
-    if [ "$(command -v curl)" ]; then
-      sh -c "$(curl -fsSL chezmoi.io/get)" -- -b "$bin_dir"
-    elif [ "$(command -v wget)" ]; then
-      sh -c "$(wget -qO- chezmoi.io/get)" -- -b "$bin_dir"
-    else
-      echo "To install chezmoi, you must have curl or wget installed." >&2
-      exit 1
-    fi
+  bin_dir="$HOME/.local/bin"
+  chezmoi="$bin_dir/chezmoi"
+  if [ "$(command -v curl)" ]; then
+    sh -c "$(curl -fsSL chezmoi.io/get)" -- -b "$bin_dir"
+  elif [ "$(command -v wget)" ]; then
+    sh -c "$(wget -qO- chezmoi.io/get)" -- -b "$bin_dir"
   else
-    chezmoi=chezmoi
+    echo "To install chezmoi, you must have curl or wget installed." >&2
+    exit 1
   fi
-  
+else
+  chezmoi=chezmoi
+fi
+
+if [ -n "${CODESPACES}" ]; then
   # Install Ghostty terminfo for users connecting from Ghostty terminal
   echo "Installing Ghostty terminfo..."
   mkdir -p "$HOME/.terminfo"

@@ -14,11 +14,12 @@
 - [x] Remove stale `git.cloning` dir
 
 ## 3. Package management
-- [ ] Move darwin packages into a tracked Brewfile + run_onchange script
-- [ ] Drop deprecated taps / `--no-lock`; fix `claude` cask; add missing packages, drop unused
-- [ ] Ubuntu: `$HOME` instead of hard-coded path, `set -e`
-- [ ] Codespaces: pin nvim version, drop interactive `Copilot setup`, arch-aware tree-sitter
-- [ ] install.sh: set `$chezmoi` outside codespaces
+- [x] Move darwin packages into a tracked Brewfile + run_onchange script
+- [x] Drop deprecated taps / `--no-lock`; fix `claude` cask; add missing packages, drop unused
+- [ ] Adopt the 5 manually-installed GUI apps (needs interactive sudo: `chezmoi apply`)
+- [x] Ubuntu: `$HOME` instead of hard-coded path, `set -e`
+- [x] Codespaces: pin nvim version, drop interactive `Copilot setup`, arch-aware tree-sitter (moved to preinstall)
+- [x] install.sh: set `$chezmoi` outside codespaces
 
 ## 4. Neovim cleanup
 - [ ] neodev -> lazydev; williamboman -> mason-org

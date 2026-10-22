@@ -1,0 +1,17 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+
+set -euo pipefail
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo '🍺  Installing Homebrew'
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+brew bundle --file={{ joinPath .chezmoi.sourceDir "Brewfile" | quote }}
+
+gh auth status >/dev/null 2>&1 || gh auth login
+{{ end -}}

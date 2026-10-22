@@ -1,6 +1,8 @@
 {{- if .ubuntu -}}
 #!{{ lookPath "bash" }}
 
+set -euo pipefail
+
 # install packages
 echo "Installing packages..."
 PACKAGES_NEEDED="\
@@ -21,17 +23,14 @@ fi
 command -v brew >/dev/null 2>&1 || \
   (echo '🍺  Installing Homebrew' && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")
 
-(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/bethany/.zprofile
+grep -qs 'linuxbrew/bin/brew shellenv' "$HOME/.zprofile" || \
+  (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> "$HOME/.zprofile"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-brew bundle --no-lock --file=/dev/stdin <<EOF
-tap "homebrew/bundle"
-tap "homebrew/core"
-tap "homebrew/services"
+brew bundle --file=/dev/stdin <<EOF
 brew "1password-cli"
 brew "bash"
 brew "bat"
-brew "bitwarden-cli"
 brew "docker"
 brew "fzf"
 brew "gh"
@@ -44,9 +43,8 @@ brew "ruby"
 brew "tmux"
 brew "wget"
 brew "nvm"
-brew "zplug"
 brew "zsh"
 EOF
 
-gh auth login
+gh auth status >/dev/null 2>&1 || gh auth login
 {{end -}}

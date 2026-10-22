@@ -9,20 +9,13 @@ export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
 nvm install --lts
 npm install -g @github/copilot
 
-echo "Installing tree-sitter CLI..."
-curl -sL https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz | gunzip > /tmp/tree-sitter
-chmod +x /tmp/tree-sitter
-sudo mv /tmp/tree-sitter /usr/local/bin/tree-sitter
-
 echo "Running nvim setup..."
-nvim --headless "+Lazy! restore" +qa
 nvim --headless -c 'GoInstallBinaries' +qa
-nvim --headless -c 'Copilot setup' +qa
 
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
 echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-sudo apt update && sudo apt install glow
+sudo apt-get update && sudo apt-get install -y glow
 
 echo "Installing tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins

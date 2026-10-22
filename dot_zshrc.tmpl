@@ -132,8 +132,15 @@ function ssh-ghostty() {
 }
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Script installs live in $NVM_DIR; brew installs (Brewfile) live under /opt/homebrew/opt/nvm
+for nvm_home in "$NVM_DIR" /opt/homebrew/opt/nvm; do
+    if [ -s "$nvm_home/nvm.sh" ]; then
+        \. "$nvm_home/nvm.sh"
+        [ -s "$nvm_home/bash_completion" ] && \. "$nvm_home/bash_completion"
+        break
+    fi
+done
+unset nvm_home
 
 export EDITOR="nvim"
 export PATH="$PATH:$(go env GOPATH)/bin"

@@ -19,7 +19,13 @@ if ! dpkg -s ${PACKAGES_NEEDED} > /dev/null 2>&1; then
     sudo apt-get -y -q install ${PACKAGES_NEEDED}
 fi
 
-# install latest neovim
+# install neovim, pinned to match the Brewfile version on macOS
+NVIM_VERSION=v0.12.6
+case "$(uname -m)" in
+    x86_64) nvim_arch=x86_64 ;;
+    aarch64|arm64) nvim_arch=arm64 ;;
+    *) echo "unsupported arch: $(uname -m)" >&2; exit 1 ;;
+esac
 if [ -f "/usr/bin/nvim" ]; then
     sudo rm -rf /usr/bin/nvim
 		if [ -d "/squashfs-root" ]; then
@@ -27,10 +33,21 @@ if [ -f "/usr/bin/nvim" ]; then
 		fi
 fi
 echo "Installing neovim..."
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-chmod u+x nvim-linux-x86_64.appimage
-./nvim-linux-x86_64.appimage --appimage-extract
+curl -LO "https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-${nvim_arch}.appimage"
+chmod u+x "nvim-linux-${nvim_arch}.appimage"
+"./nvim-linux-${nvim_arch}.appimage" --appimage-extract
 ./squashfs-root/AppRun --version
 sudo mv squashfs-root /
 sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
+
+# nvim-treesitter (main) needs the CLI to build parsers during lazy-restore
+echo "Installing tree-sitter CLI..."
+case "$(uname -m)" in
+    x86_64) ts_arch=x64 ;;
+    aarch64|arm64) ts_arch=arm64 ;;
+    *) echo "unsupported arch: $(uname -m)" >&2; exit 1 ;;
+esac
+curl -sL "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-${ts_arch}.gz" | gunzip > /tmp/tree-sitter
+chmod +x /tmp/tree-sitter
+sudo mv /tmp/tree-sitter /usr/local/bin/tree-sitter
 {{end -}}
