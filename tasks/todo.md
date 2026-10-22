@@ -23,11 +23,12 @@
 - [x] install.sh: set `$chezmoi` outside codespaces
 
 ## 4. Neovim cleanup
-- [ ] neodev -> lazydev; williamboman -> mason-org
-- [ ] Single LspAttach autocmd; one owner for gopls; single Go formatter
-- [ ] Deprecated APIs (nvim_buf_set_option, vim.highlight)
-- [ ] Keymap collisions (`<leader>a`, `<C-hjkl>`, `<Space>` nop, Copilot `<Tab>`)
-- [ ] Drop Comment.nvim; go.nvim lazy-load on ft only
+- [x] neodev -> lazydev; williamboman -> mason-org
+- [x] Single LspAttach autocmd; gopls configured in lsp.lua (audit was wrong: only one gopls client and one formatter ran, but go.nvim options were mostly dead keys)
+- [x] Deprecated APIs (nvim_buf_set_option, vim.highlight)
+- [x] Keymap collisions: swap -> `<leader>sa/sA`, `<C-hjkl>` via tmux.nvim, `<Space>` nop removed (Copilot `<Tab>` was not a real conflict: insert vs normal mode)
+- [ ] Decide on AI plugins: sidekick NES needs copilot-language-server, which is not installed
+- [x] Drop Comment.nvim; go.nvim lazy-load on ft only
 
 ## 5. Shell / tmux / theme
 - [x] Remove old aliases: gofmt, slop, swap, master, ghgh, gop, capi

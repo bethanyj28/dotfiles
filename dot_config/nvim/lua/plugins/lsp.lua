@@ -1,111 +1,107 @@
+-- Per-server overrides passed to vim.lsp.config(). Servers installed via Mason but
+-- not listed here are still enabled by mason-lspconfig with default settings.
 local servers = {
   cssls = {
-    css = {
-      validate = true,
+    settings = {
+      css = { validate = true },
+      less = { validate = true },
+      scss = { validate = true },
     },
-    less = {
-      validate = true,
-    },
-    scss = {
-      validate = true,
+  },
+  gopls = {
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        staticcheck = true,
+        linksInHover = false,
+        codelenses = {
+          generate = true,
+          gc_details = true,
+          regenerate_cgo = true,
+          tidy = true,
+          upgrade_dependency = true,
+          vendor = true,
+        },
+        usePlaceholders = true,
+      },
     },
   },
   lua_ls = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = "LuaJIT",
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { "vim" },
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
+    settings = {
+      Lua = {
+        runtime = { version = "LuaJIT" },
+        -- Do not send telemetry data containing a randomized but unique identifier
+        telemetry = { enable = false },
       },
     },
   },
   rust_analyzer = {},
-  ts_ls = {  
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    },
+  ts_ls = {
     init_options = {
       hostInfo = "neovim",
     },
   },
   elixirls = {},
   yamlls = {
-    schemas = {
-      ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-      ["http://json.schemastore.org/kustomization"] = "*/kustomize/*",
+    settings = {
+      yaml = {
+        schemas = {
+          ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+          ["http://json.schemastore.org/kustomization"] = "*/kustomize/*",
+        },
+      },
     },
   },
   marksman = {},
 }
 
--- LSP settings.
---  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(client, bufnr)
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = "LSP: " .. desc
+-- Buffer-local keymaps for every LSP client, including gopls
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+  callback = function(args)
+    local bufnr = args.buf
+    local nmap = function(keys, func, desc)
+      vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
     end
 
-    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-  end
+    nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+    nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-  nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-  nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-
-  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-  nmap("gr", function() require("telescope.builtin").lsp_references() end, "[G]oto [R]eferences")
-  nmap("gI", function() require("telescope.builtin").lsp_implementations() end, "[G]oto [I]mplementation")
-  nmap("<leader>D", function() require("telescope.builtin").lsp_type_definitions() end, "Type [D]efinition")
-  nmap("<leader>ds", function() require("telescope.builtin").lsp_document_symbols() end, "[D]ocument [S]ymbols")
-  nmap("<leader>ws", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, "[W]orkspace [S]ymbols")
-  -- See `:help K` for why this keymap
-  nmap("K", function() vim.lsp.buf.hover({ border = "rounded" }) end, "Hover Documentation")
-  nmap("<C-p>", function() vim.lsp.buf.signature_help({ border = "rounded" }) end, "Signature Documentation")
-  -- Lesser used LSP functionality
-  nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-  nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
-  nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-  nmap("<leader>wl", function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, "[W]orkspace [L]ist Folders")
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-    vim.lsp.buf.format()
-  end, { desc = "Format current buffer with LSP" })
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-end
+    nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+    nmap("gr", function() require("telescope.builtin").lsp_references() end, "[G]oto [R]eferences")
+    nmap("gI", function() require("telescope.builtin").lsp_implementations() end, "[G]oto [I]mplementation")
+    nmap("<leader>D", function() require("telescope.builtin").lsp_type_definitions() end, "Type [D]efinition")
+    nmap("<leader>ds", function() require("telescope.builtin").lsp_document_symbols() end, "[D]ocument [S]ymbols")
+    nmap("<leader>ws", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, "[W]orkspace [S]ymbols")
+    -- See `:help K` for why this keymap
+    nmap("K", function() vim.lsp.buf.hover({ border = "rounded" }) end, "Hover Documentation")
+    nmap("<C-p>", function() vim.lsp.buf.signature_help({ border = "rounded" }) end, "Signature Documentation")
+    -- Lesser used LSP functionality
+    nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+    nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
+    nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
+    nmap("<leader>wl", function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, "[W]orkspace [L]ist Folders")
+    -- Create a command `:Format` local to the LSP buffer
+    vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+      vim.lsp.buf.format()
+    end, { desc = "Format current buffer with LSP" })
+  end,
+})
 
 return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
       "j-hui/fidget.nvim",
-      "folke/neodev.nvim",
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
+      "mason-org/mason.nvim",
+      "mason-org/mason-lspconfig.nvim",
     },
     config = function()
-      require("neodev").setup()
       require("fidget").setup()
-      -- Diagnostic configuration
       vim.diagnostic.config({
         virtual_text = true,
         signs = true,
@@ -122,60 +118,40 @@ return {
     end,
   },
   {
-    "williamboman/mason.nvim",
+    -- Neovim runtime + plugin types for lua_ls, only when editing Lua
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+  {
+    "mason-org/mason.nvim",
     config = function()
       require("mason").setup()
     end,
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     dependencies = {
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      })
+      for name, config in pairs(servers) do
+        vim.lsp.config(name, config)
+      end
 
-      -- Setup mason-lspconfig with the servers to install
+      -- Installs the servers above and enables every Mason-installed server
       require("mason-lspconfig").setup({
         ensure_installed = vim.tbl_keys(servers),
       })
-      -- Configure each server with vim.lsp.config (new v2 API)
-      for server_name, server_config in pairs(servers) do
-        local config = {
-          capabilities = capabilities,
-          on_attach = on_attach,
-        }
-        -- Add filetypes if specified
-        if server_config.filetypes then
-          config.filetypes = server_config.filetypes
-        end
-        -- Add init_options if specified
-        if server_config.init_options then
-          config.init_options = server_config.init_options
-        end
-        -- Add settings, excluding top-level config properties
-        if next(server_config) ~= nil then
-          local settings = {}
-          for k, v in pairs(server_config) do
-            if k ~= "filetypes" and k ~= "init_options" then
-              settings[k] = v
-            end
-          end
-
-          -- Only set settings if there are any after filtering
-          if next(settings) ~= nil then
-            config.settings = settings
-          end
-        end
-
-        -- Use the new vim.lsp.config API (mason-lspconfig v2 + nvim 0.11+)
-        vim.lsp.config[server_name] = config
-      end
-      -- Enable all configured servers
-      vim.lsp.enable(vim.tbl_keys(servers))
     end,
   },
 }

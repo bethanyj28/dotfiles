@@ -81,13 +81,13 @@ return {
       vim.keymap.set({ "n", "x", "o" }, "[M", move_fn(move.goto_previous_end, "@function.outer"))
       vim.keymap.set({ "n", "x", "o" }, "[]", move_fn(move.goto_previous_end, "@class.outer"))
 
-      -- Swap
-      vim.keymap.set("n", "<leader>a", function()
+      -- Swap (not <leader>a, which is sidekick's prefix)
+      vim.keymap.set("n", "<leader>sa", function()
         require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
-      end)
-      vim.keymap.set("n", "<leader>A", function()
+      end, { desc = "[S]wap [A]rgument with next" })
+      vim.keymap.set("n", "<leader>sA", function()
         require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.inner")
-      end)
+      end, { desc = "[S]wap [A]rgument with previous" })
     end,
   },
 }

@@ -49,19 +49,9 @@ vim.opt.smartindent = true
 vim.opt.smarttab = true
 vim.opt.tabstop = 2
 
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
--- Easier window switching
-vim.keymap.set('n', '<C-h>', '<C-W>h', {silent = true, noremap = true})
-vim.keymap.set('n', '<C-j>', '<C-W>j', {silent = true, noremap = true})
-vim.keymap.set('n', '<C-k>', '<C-W>k', {silent = true, noremap = true})
-vim.keymap.set('n', '<C-l>', '<C-W>l', {silent = true, noremap = true})
 
 -- use jk as ESC in insert mode
 vim.keymap.set('i', 'jk', '<ESC>', {silent = true, noremap = true})
@@ -74,11 +64,11 @@ vim.keymap.set('n', '<Leader>y', '"+y', {silent = true, noremap = true})
 vim.keymap.set('n', '<Leader>p', '"+p', {silent = true, noremap = true})
 
 -- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
+-- See `:help vim.hl.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
   group = highlight_group,
   pattern = '*',
