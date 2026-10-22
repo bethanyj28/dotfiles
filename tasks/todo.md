@@ -32,8 +32,24 @@
 
 ## 5. Shell / tmux / theme
 - [x] Remove old aliases: gofmt, slop, swap, master, ghgh, gop, capi
-- [ ] Double compinit; sshpls path
-- [ ] Disable omz self-update
-- [ ] tmux: tmux-256color, drop tmux.nvim/copycat tpm entries, pick one navigator
-- [ ] Ghostty theme -> mocha
-- [ ] Refresh README
+- [x] Double compinit; sshpls path
+- [x] Disable omz self-update
+- [x] tmux: tmux-256color + RGB, drop copycat and vim-tmux-navigator (audit was wrong: tmux.nvim is also the tmux-side plugin), drop hard-coded default-shell
+- [x] Ghostty theme -> built-in Catppuccin Mocha
+- [x] Refresh README
+
+## Review
+
+All five steps done; each verified on this Mac (headless nvim probes, brew bundle check,
+zsh/tmux/ghostty config checks, `chezmoi status` clean). Codespaces/Ubuntu scripts were
+syntax-checked with rendered templates but not run end to end.
+
+Audit corrections found while implementing:
+- gopls never ran twice and Go files were never double-formatted (go.nvim options were dead keys)
+- Copilot `<Tab>` and sidekick `<Tab>` don't conflict (insert vs normal mode)
+- tmux.nvim is a tpm plugin too; the redundant one was vim-tmux-navigator
+- Dropping the second compinit didn't measurably change zsh startup (~0.30s)
+
+Open:
+- [ ] Decide on AI plugins (sidekick NES needs copilot-language-server)
+- [ ] Optional: more App Store apps in Brewfile via `mas`; untap or trust old firmware taps; remove ~/.local/bin/herdr

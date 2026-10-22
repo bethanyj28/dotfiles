@@ -1,47 +1,43 @@
 # ~/.dotfiles
 
-A new evolution of my dotfiles utilizing chezmoi for management. For now primarily focuses on codespaces environments, but may expand to mac and windows environments in the future.
+Dotfiles managed with [chezmoi](https://chezmoi.io) for macOS, Ubuntu and GitHub Codespaces.
 
-## Neovim Plugins
+## Setup
 
-### sidekick.nvim
+- **macOS / Ubuntu:** `chezmoi init --apply bethanyj28`
+- **Codespaces:** set this repo as your dotfiles repo; Codespaces runs `install.sh`, which installs chezmoi and applies.
 
-[folke/sidekick.nvim](https://github.com/folke/sidekick.nvim) - AI-powered Next Edit Suggestions (NES) and integrated AI CLI terminal.
+`.chezmoi.yaml.tmpl` detects the environment (`codespaces`, `ubuntu`, `work`) and the `run_*` scripts install packages for it.
 
-**Features:**
-- Next Edit Suggestions powered by Copilot LSP
-- Integrated AI CLI terminal with tmux support
-- Rich diffs with syntax highlighting
-- Hunk-by-hunk navigation for reviewing edits
+## What's here
 
-**Key Bindings:**
-- `<Tab>` - Jump to or apply next edit suggestion
-- `<leader>af` - Switch focus to/from Sidekick CLI
-- `<leader>aa` - Toggle Sidekick CLI
-- `<leader>as` - Select AI CLI tool
+| Path | What |
+|---|---|
+| `Brewfile` | macOS packages, casks and App Store apps. Re-applied whenever it changes. |
+| `dot_zshrc.tmpl` | zsh with oh-my-zsh (refreshed weekly by chezmoi, self-update disabled) |
+| `dot_tmux.conf` | tmux, prefix `C-Space`, catppuccin mocha, plugins via tpm |
+| `dot_config/nvim` | Neovim config using lazy.nvim |
+| `dot_config/ghostty` | Ghostty, catppuccin mocha |
+| `nvim-lazy-lock.json` | Pinned Neovim plugin versions (symlinked to `~/.config/nvim/lazy-lock.json`) |
 
-**Requirements:**
-- Neovim >= 0.11.2
-- Copilot LSP server (configured via Mason)
-- Tmux (already configured in this dotfiles)
+## Common tasks
 
-## //TODO
-- [x] Setup current dotfiles to work with chezmoi
-- [x] Fix errors in neovim for local & codespaces
-- [x] Get setup with tmux
-  - [x] Seamless navigation between tmux and neovim
-  - [x] Get comfortable with tmux & tweak keybindings
-- [ ] Look into Alacritty when comfortable with tmux (easily port config)
-- [ ] Update theme
-  - [x] Catppuccin everywhere? ☕🐈‍⬛
-  - [ ] Update lualine
-  - [ ] Zsh syntax highlighting?
-- [x] Fix filetree
-  - [x] Show hidden files
-  - [x] Show icons
-- [x] Fix language support
-  - [x] Go is different than everything else
-  - [x] Solargraph either never works or crashes
-  - [x] Add markdown support
-  - [ ] Debugging with dap
-- [ ] Refactor neovim lua config
+- **Add a Mac package:** add it to `Brewfile`, then `chezmoi apply`.
+- **Update Neovim plugins:** `:Lazy update` in nvim, check things work, then commit `nvim-lazy-lock.json`. Other machines get the same versions on their next `chezmoi apply` (`Lazy! restore`).
+- **Update tmux plugins:** `prefix + U`.
+
+## Neovim
+
+Leader is `,`. Language servers are installed with Mason and configured in `lua/plugins/lsp.lua`; any Mason-installed server is enabled automatically.
+
+| Keys | Action |
+|---|---|
+| `<C-h/j/k/l>` | Move between nvim splits and tmux panes (tmux.nvim) |
+| `<leader>sf` / `sg` / `sw` | Find files / grep / grep word under cursor |
+| `gd` / `gr` / `K` | Definition / references / hover |
+| `<leader>rn` / `<leader>ca` | Rename / code action |
+| `<leader>sa` / `<leader>sA` | Swap argument with next / previous |
+| `<C-n>` / `<leader>m` | Toggle file tree / reveal current file |
+| `<leader>aa` / `af` / `as` | Sidekick: toggle AI CLI / focus / select tool |
+| `<leader>cc` | CopilotChat |
+| `<leader>km` | Search all keymaps |

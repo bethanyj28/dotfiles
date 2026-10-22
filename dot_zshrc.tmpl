@@ -4,10 +4,12 @@ ZSH_THEME="refined"
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
+# chezmoi refreshes oh-my-zsh (.chezmoiexternal); its own updater would fight that
+zstyle ':omz:update' mode disabled
+
 source $ZSH/oh-my-zsh.sh
 
-# Case-insensitive completion
-autoload -U compinit && compinit
+# Case-insensitive completion (oh-my-zsh already runs compinit)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu select
 setopt COMPLETE_ALIASES
@@ -101,7 +103,7 @@ alias jsfmt='prettier --write'
 alias jsonf='jq .'
 alias yamlf='yq eval . -P'
 # ssh
-alias sshpls='ssh-add .ssh/id_ed25519'
+alias sshpls='ssh-add ~/.ssh/id_ed25519'
 
 # SSH with Ghostty terminfo transfer
 # Usage: ssh-ghostty user@host [additional ssh args]
