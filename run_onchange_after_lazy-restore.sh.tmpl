@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Install plugins at the versions pinned in the lockfile (never upgrades).
+# Re-runs whenever the lockfile changes. To upgrade: `:Lazy update`, then commit nvim-lazy-lock.json.
+# lazy-lock.json hash: {{ include "nvim-lazy-lock.json" | sha256sum }}
+
+nvim --headless "+Lazy! restore" +qa

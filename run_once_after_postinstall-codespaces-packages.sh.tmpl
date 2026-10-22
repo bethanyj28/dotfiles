@@ -15,7 +15,7 @@ chmod +x /tmp/tree-sitter
 sudo mv /tmp/tree-sitter /usr/local/bin/tree-sitter
 
 echo "Running nvim setup..."
-nvim --headless "+Lazy! sync" +qa
+nvim --headless "+Lazy! restore" +qa
 nvim --headless -c 'GoInstallBinaries' +qa
 nvim --headless -c 'Copilot setup' +qa
 

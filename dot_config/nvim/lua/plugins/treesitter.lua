@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     lazy = false,
     build = ":TSUpdate",
     config = function()
@@ -29,11 +30,10 @@ return {
         "vimdoc",
       })
 
-      -- Disable treesitter for .tmpl files
-      vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
-        pattern = "*.tmpl",
+      -- The main branch doesn't enable highlighting; start it for any filetype with a parser
+      vim.api.nvim_create_autocmd("FileType", {
         callback = function(args)
-          vim.treesitter.stop(args.buf)
+          pcall(vim.treesitter.start, args.buf)
         end,
       })
     end,
