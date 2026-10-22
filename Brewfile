@@ -37,5 +37,8 @@ cask "copilot-cli"
 cask "1password-cli"
 cask "1password"
 cask "raycast"
-cask "telegram"
 cask "zoom"
+
+# Mac App Store (requires being signed in to the App Store)
+brew "mas"
+mas "Telegram", id: 747648890
