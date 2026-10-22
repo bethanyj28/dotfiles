@@ -39,5 +39,4 @@ Leader is `,`. Language servers are installed with Mason and configured in `lua/
 | `<leader>sa` / `<leader>sA` | Swap argument with next / previous |
 | `<C-n>` / `<leader>m` | Toggle file tree / reveal current file |
 | `<leader>aa` / `af` / `as` | Sidekick: toggle AI CLI / focus / select tool |
-| `<leader>cc` | CopilotChat |
 | `<leader>km` | Search all keymaps |

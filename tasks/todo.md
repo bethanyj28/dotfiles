@@ -51,5 +51,6 @@ Audit corrections found while implementing:
 - Dropping the second compinit didn't measurably change zsh startup (~0.30s)
 
 Open:
-- [ ] Decide on AI plugins (sidekick NES needs copilot-language-server)
-- [ ] Optional: more App Store apps in Brewfile via `mas`; untap or trust old firmware taps; remove ~/.local/bin/herdr
+- [x] Removed copilot.vim + CopilotChat; sidekick kept for AI CLI only (NES disabled)
+- [ ] Optional: more App Store apps in Brewfile via `mas`; untap or trust old firmware taps
+- [x] Removed duplicate ~/.local/bin/herdr (brew copy, same 0.9.5, now on PATH)
