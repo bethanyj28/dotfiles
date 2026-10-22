@@ -1,0 +1,10 @@
+onboarding = false
+
+[ui]
+status_indicators = "dots"
+
+[ui.toast]
+delivery = "system"
+
+[keys]
+prefix = "ctrl+space"
