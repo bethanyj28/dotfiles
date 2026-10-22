@@ -17,7 +17,7 @@
 - [x] Move darwin packages into a tracked Brewfile + run_onchange script
 - [x] Drop deprecated taps / `--no-lock`; fix `claude` cask; add missing packages, drop unused
 - [x] Telegram is an App Store app: manage via `mas` instead of cask
-- [ ] Adopt Docker, Claude, 1Password, Raycast (terminal needs App Management permission)
+- [x] Adopt Docker, Claude, 1Password, Raycast (terminal needs App Management permission)
 - [x] Ubuntu: `$HOME` instead of hard-coded path, `set -e`
 - [x] Codespaces: pin nvim version, drop interactive `Copilot setup`, arch-aware tree-sitter (moved to preinstall)
 - [x] install.sh: set `$chezmoi` outside codespaces
